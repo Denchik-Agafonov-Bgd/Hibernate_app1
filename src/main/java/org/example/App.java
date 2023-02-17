@@ -79,7 +79,7 @@ public class App
             item.getOwner().getItems().remove(item);
 
             item.setOwner(person);
-            
+
             person.getItems().add(item);
 
 
