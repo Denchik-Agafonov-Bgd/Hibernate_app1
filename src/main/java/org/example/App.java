@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.model.Item;
+import org.example.model.Passport;
+import org.example.model.People;
 import org.example.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,13 +23,27 @@ public class App
     public static void main( String[] args )
     {
         Configuration configuration = new Configuration().addAnnotatedClass(Person.class)
-                .addAnnotatedClass(Item.class);
+                .addAnnotatedClass(Item.class)
+                .addAnnotatedClass(People.class)
+                .addAnnotatedClass(Passport.class);
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
 
         try {
             session.beginTransaction();
+
+            People people = new People("Test people", 20);
+
+            Passport passport = new Passport(1234);
+
+            people.setPassport(passport);
+
+            session.save(people);
+
+
+
+            ///////////////
 
             /*Person person = session.get(Person.class, 3);
             System.out.println(person);
@@ -73,14 +89,16 @@ public class App
 
             ////////////////////////
 
-            Person person = session.get(Person.class, 2);
+            /*Person person = session.get(Person.class, 2);
             Item item = session.get(Item.class, 1);
 
             item.getOwner().getItems().remove(item);
 
             item.setOwner(person);
 
-            person.getItems().add(item);
+            person.getItems().add(item);*/
+
+            /////////////
 
 
             /*List<Person> people = session.createQuery("FROM Person WHERE age > 30").getResultList();
